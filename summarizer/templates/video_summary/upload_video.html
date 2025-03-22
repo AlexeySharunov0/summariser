@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Text Summarization</title>
+    <style>
+        /* Общие стили */
+        body {
+            background-color: #0a0a0a;
+            color: #0f0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #111;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px #0f0, 0 0 40px #0f0;
+            max-width: 600px;
+            width: 100%;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 20px #0f0, 0 0 40px #0f0;
+            }
+            to {
+                box-shadow: 0 0 30px #0f0, 0 0 60px #0f0;
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+        }
+
+        /* Поле ввода */
+        input[type="text"] {
+            width: 80%;
+            padding: 15px;
+            margin: 20px 0;
+            border: 2px solid #0f0;
+            background-color: #222;
+            color: #0f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            box-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+        }
+
+        /* Кнопка */
+        button {
+            padding: 15px 30px;
+            background-color: #0f0;
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0d0;
+            transform: scale(1.1);
+        }
+
+        button:active {
+            transform: scale(0.9);
+        }
+
+        /* Область с результатом */
+        .summary {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #0f0;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .summary h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+        }
+
+        .summary p {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #0f0;
+        }
+
+        /* Анимация загрузки */
+        .loader {
+            display: none;
+            border: 4px solid #0f0;
+            border-top: 4px solid transparent;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Футер */
+        footer {
+            position: absolute;
+            bottom: 10px;
+            color: #0f0;
+            font-size: 0.8rem;
+            text-shadow: 0 0 5px #0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Neon Text Summarization</h1>
+        <form id="summarizeForm" method="POST" action="/summarize/">
+            {% csrf_token %}
+            <input type="text" id="url" name="url" placeholder="Enter URL here..." required>
+            <button type="submit">Summarize</button>
+        </form>
+        <div class="loader" id="loader"></div>
+        <div class="summary" id="summary">
+            <h2>Summary</h2>
+            <p id="summaryText">Your summarized text will appear here...</p>
+        </div>
+    </div>
+    <footer>
+        &copy; 2025 Sharunov Alexey. All rights reserved.
+    </footer>
+
+</body>
+</html>
